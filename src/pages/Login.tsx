@@ -49,7 +49,7 @@ const formSchema = z.object({
 
 
     function onSubmit(values: z.infer<typeof formSchema>) {
-      
+      // TODO use values to validate login
       githubTokenSetter()
       navigate('/')
     

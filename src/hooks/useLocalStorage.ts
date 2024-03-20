@@ -1,3 +1,5 @@
+import { stat } from 'fs';
+import { useEffect, useState } from 'react';
 import { useLocalStorage } from 'react-use'
 
 function rundomString() {
@@ -9,31 +11,39 @@ function fakeToken() {
 };
 
 
+const dayInMiliseconds =86400000;
+
 
 export  function useGithubToken() {
     const [githubToken, setGithubToken] = useLocalStorage<{ token: string, ttl: number }>('githubToken')
 
-    function validateToken() {
-        if (!githubToken) return false;
+    const [state,setLogInStatus] = useState({isLoading:true,isLogInNeeded:false})
 
-        if (Date.now() > githubToken.ttl) {
-            setGithubToken(undefined)
-            return false
+
+
+    function validateToken() {
+        if (!!githubToken) {
+            if(Date.now() > githubToken.ttl){
+                setLogInStatus({isLoading:false,isLogInNeeded:true})
+                return;
+            }
+          
         }
 
-    
-        return true
+        setLogInStatus ({isLoading:false,isLogInNeeded:false})
     }
+    useEffect(()=>{
 
-    const token = validateToken()
+        validateToken()
 
+
+    },[githubToken])
+
+ 
     function githubTokenSetter() {
         const token = fakeToken();
-        setGithubToken({token,ttl:Date.now()})
+        setGithubToken({token,ttl:Date.now()+ dayInMiliseconds })
 
     }
-
-
-
-    return { token,githubTokenSetter }
+    return { githubTokenSetter,...state }
 }

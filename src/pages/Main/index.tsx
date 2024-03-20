@@ -10,8 +10,11 @@ export default function Main() {
    const {data,isLoading} = useGithubUserQuery(searchFilterValue);
 
   return (
-    <div className='max-w-[350px]'>
+    <div className='flex flex-row mt-5 '>
+    <div className='basis-2/6	border-w'>
         <SearchFilter filterValueSetter={setSearchFilterValue} />
+    </div>
+    <div className='basis-4/6	'></div>
     </div>
   )
 }
