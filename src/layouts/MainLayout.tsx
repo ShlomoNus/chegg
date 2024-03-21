@@ -9,17 +9,15 @@ import { Outlet, useNavigate } from 'react-router-dom';
 export default function MainLayout() {
     const navigate = useNavigate();
 
-    const {isLoading,isLogInNeeded} = useGithubToken()
+    const {isLogInNeeded} = useGithubToken()
     const { setTheme, theme } = useTheme();
     const isDark = theme == 'dark';
     const imagePath = isDark? '/src/assets/github-mark-white.png': '/src/assets/github-mark.png';
 
 
     useEffect(()=>{
-        console.log(isLogInNeeded);
         
         if(isLogInNeeded){
-            console.log('ndksjndsj');
             navigate('/login')
         }
 
