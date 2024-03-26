@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { RouteObject } from 'react-router-dom';
 
-import { useGithubUserQuery } from '@/hooks/useGetGithubUser';
+import { useGetGithubUserQuery } from '@/hooks/useGetGithubUser';
 
 import SearchFilter from './SearchFilter';
 import LoaderWrapper from './MainContent/LoaderWrapper';
@@ -10,7 +10,7 @@ import Error from './MainContent/Error';
 
 export default function Main() {
     const [searchFilterValue, setSearchFilterValue] = useState('');
-    const { data, isLoading, isError } = useGithubUserQuery(searchFilterValue);
+    const { data, isLoading, isError } = useGetGithubUserQuery(searchFilterValue);
     const content = !Boolean(searchFilterValue) ? null : isLoading ? (
         <LoaderWrapper />
     ) : isError ? (

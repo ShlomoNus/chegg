@@ -11,3 +11,12 @@ export type User =  {
     created_at: string;
     updated_at: string;
 }
+
+export type Details={
+    html_url:string;
+    name?:string;
+    login?:string;
+
+}
+
+export type Segment='followers'| 'repos'
