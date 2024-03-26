@@ -8,6 +8,7 @@ import LoaderWrapper from './LoaderWrapper';
 import Error from './Error';
 import { useEffect } from 'react';
 import { useFirstMountState } from 'react-use';
+import { useTheme } from '@/state/providers/theme';
 
 export default function UsersDetails({
     user,
@@ -56,8 +57,12 @@ export default function UsersDetails({
 
     const page = data?.pages.length;
 
+    const { isDark } = useTheme();
+    const border = isDark ? 'border-white' : 'border-black';
     return (
-        <div className="border-white border border-double rounded-3xl mt-10 p-5 px-12 h-[400px] min-w-96 flex flex-col items-center">
+        <div
+            className={`${border} border border-double rounded-3xl mt-10 p-5 px-12 h-[400px] min-w-96 flex flex-col items-center`}
+        >
             <div className="flex flex-row justify-center mr-2 mb-6 items-center sticky top-0">
                 <h3 className=" text-2xl font-semibold tracking-tight">
                     {capitalize(segment)}

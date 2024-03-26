@@ -1,5 +1,6 @@
 import { Badge } from '@/components/ui/badge';
 import { segmentAtom } from '@/state/atoms/detailsAtom';
+import { useTheme } from '@/state/providers/theme';
 import { Segment, User } from '@/types/api';
 import { Avatar, AvatarImage } from '@radix-ui/react-avatar';
 import { useSetAtom } from 'jotai';
@@ -24,8 +25,11 @@ export default function UserInfo({ user }: { user: User }) {
         updated_at,
     } = user;
 
+    const { isDark } = useTheme();
+    const border = isDark?'border-white':'border-black'
+    
     return (
-        <div className="border-white border border-double rounded-3xl mt-10 p-5 h-[400px]">
+        <div className={`border border-double ${border} rounded-3xl mt-10 p-5 h-[400px]`}>
             <div className="flex flex-row justify-center mr-2 mb-6 items-center">
                 <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">
                     User Info

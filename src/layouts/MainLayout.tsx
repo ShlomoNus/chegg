@@ -10,8 +10,8 @@ export default function MainLayout() {
     const navigate = useNavigate();
 
     const {isLogInNeeded} = useGithubToken()
-    const { setTheme, theme } = useTheme();
-    const isDark = theme == 'dark';
+    const { setTheme, isDark } = useTheme();
+   
     const imagePath = isDark? '/src/assets/github-mark-white.png': '/src/assets/github-mark.png';
 
 

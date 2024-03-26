@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react"
+import { boolean } from 'zod'
  
 type Theme = "dark" | "light" 
  
@@ -11,12 +12,14 @@ type ThemeProviderProps = {
  
 type ThemeProviderState = {
     theme: Theme
-    setTheme: (theme: Theme) => void
+    setTheme: (theme: Theme) => void,
+    isDark:boolean
   }
    
   const initialState: ThemeProviderState = {
     theme: "light",
     setTheme: () => null,
+    isDark:true
   }
  
   const ThemeProviderContext = createContext<ThemeProviderState>(initialState)
@@ -49,12 +52,14 @@ type ThemeProviderState = {
       root.classList.add(theme)
     }, [theme])
    
+    const isDark = theme == 'dark';
     const value = {
       theme,
       setTheme: (theme: Theme) => {
         localStorage.setItem(storageKey, theme)
         setTheme(theme)
       },
+      isDark
     }
    
     return (
