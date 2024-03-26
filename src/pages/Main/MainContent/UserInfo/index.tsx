@@ -17,7 +17,7 @@ export default function UserInfo({ user }: { user: User }) {
     } = user;
 
     return (
-        <div className="border-white border border-double rounded-3xl mt-10 p-5">
+        <div className="border-white border border-double rounded-3xl mt-10 p-5 h-[360px]">
             <div className="flex flex-row justify-center mr-2 mb-6 items-center">
                 <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">
                     User Info
@@ -52,7 +52,7 @@ export default function UserInfo({ user }: { user: User }) {
                     <div className="mb-2">I am {bio}</div>
                 </>
             ) : null}
-            <div className="flex flex-row justify-evenly mb-5">
+            <div className="flex flex-row justify-start mb-5">
                 <div className="flex flex-row justify-center mr-2">
                     <div className="whitespace-nowrap mr-2">created at:</div>
                     <Badge>{created_at}</Badge>
