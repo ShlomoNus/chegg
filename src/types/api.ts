@@ -22,9 +22,6 @@ export type DetailsWithName = {
     name: string;
 };
 
-export type DetailsWithLogin = {
-    html_url: string;
-    login: string;
-};
+
 
 export type Segment = 'followers' | 'repos';

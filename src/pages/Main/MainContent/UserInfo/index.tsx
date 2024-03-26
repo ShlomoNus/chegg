@@ -1,9 +1,17 @@
 import { Badge } from '@/components/ui/badge';
-import { User } from '@/types/api';
+import { segmentAtom } from '@/state/atoms/detailsAtom';
+import { Segment, User } from '@/types/api';
 import { Avatar, AvatarImage } from '@radix-ui/react-avatar';
+import { useSetAtom } from 'jotai';
 import capitalize from 'lodash.capitalize';
 
 export default function UserInfo({ user }: { user: User }) {
+    const setSegment = useSetAtom(segmentAtom);
+
+    function selectSegment(segment: Segment) {
+        setSegment(segment);
+    }
+
     const {
         avatar_url,
         html_url,
@@ -17,7 +25,7 @@ export default function UserInfo({ user }: { user: User }) {
     } = user;
 
     return (
-        <div className="border-white border border-double rounded-3xl mt-10 p-5 h-[360px]">
+        <div className="border-white border border-double rounded-3xl mt-10 p-5 h-[400px]">
             <div className="flex flex-row justify-center mr-2 mb-6 items-center">
                 <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">
                     User Info
@@ -28,7 +36,7 @@ export default function UserInfo({ user }: { user: User }) {
                     </Avatar>
                 ) : null}
             </div>
-
+            
             <div className="flex flex-row justify-start mb-4">
                 <div className="flex flex-row justify-start mr-2 ">
                     <div className="mr-1">I am</div>
@@ -66,7 +74,10 @@ export default function UserInfo({ user }: { user: User }) {
                 <div className="whitespace-nowrap mr-2 underline">
                     Public Repos:
                 </div>
-                <Badge className="hover:underline cursor-pointer">
+                <Badge
+                    className="hover:underline cursor-pointer"
+                    onClick={() => selectSegment('repos')}
+                >
                     {public_repos}
                 </Badge>
             </div>
@@ -74,7 +85,10 @@ export default function UserInfo({ user }: { user: User }) {
                 <div className="whitespace-nowrap mr-2 underline">
                     Followers:
                 </div>
-                <Badge className="hover:underline cursor-pointer">
+                <Badge
+                    className="hover:underline cursor-pointer"
+                    onClick={() => selectSegment('followers')}
+                >
                     {followers}
                 </Badge>
             </div>
