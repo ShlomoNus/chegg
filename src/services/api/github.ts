@@ -1,5 +1,5 @@
-import axios from 'axios'
+import axios from 'axios';
 
-const baseURL = 'https://jsonplaceholder.typicode.com/';
+const baseURL = 'https://api.github.com/users/';
 
-export const GithubUserApiInstance = axios.create({baseURL})
+export const GithubUserApiInstance = axios.create({ baseURL });
