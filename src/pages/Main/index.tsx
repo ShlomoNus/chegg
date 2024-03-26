@@ -1,9 +1,12 @@
 import { useState } from 'react';
 import { RouteObject } from 'react-router-dom';
 
-import SearchFilter from './SearchFilter';
 import { useGithubUserQuery } from '@/hooks/useGetGithubUser';
 import { Badge } from '@/components/ui/badge';
+import { Avatar, AvatarImage } from '@radix-ui/react-avatar';
+import capitalize from 'lodash.capitalize';
+import SearchFilter from './SearchFilter';
+import { formateDate } from '@/utils/date';
 
 export default function Main() {
     const [searchFilterValue, setSearchFilterValue] = useState('');
@@ -33,26 +36,60 @@ export default function Main() {
                 </h1>
             </div>
             <div className="flex flex-row mt-20 ">
-                <div className="basis-2/6	border-w flex flex-col ">
+                <div className="basis-2/6	border-w flex flex-col max-w-[350px] items-start">
                     <SearchFilter filterValueSetter={setSearchFilterValue} />
-                    <div className="border-white border border-double min-w-32 min-h-32 rounded-lg">
-                        <div>user info</div>
-                        <div className="flex flex-row justify-evenly">
-                            <div>avatar</div>
-                            <Badge>{data?.login}</Badge>
-                            <Badge>{data?.location}</Badge>
+                    <div className="border-white border border-double rounded-3xl mt-10 p-5">
+                        <div className="flex flex-row justify-center mr-2 mb-6">
+                            <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">
+                                User Info
+                            </h3>
+                            {Boolean(user.avatar_url) ? (
+                                <Avatar className="h-5 w-5 rounded-full ml-5">
+                                    <AvatarImage
+                                        sizes=""
+                                        src={user.avatar_url}
+                                    />
+                                </Avatar>
+                            ) : null}
                         </div>
-                        <div className="">{data?.bio}</div>
-                        <div className="flex flex-row justify-evenly">
-                            <>
-                                <span>user created:</span>{' '}
-                                <Badge>{data?.created_at}</Badge>
-                            </>
-                            <>
-                                <span>last update:</span>{' '}
-                                <Badge>{data?.updated_at}</Badge>
-                            </>
-                            \{' '}
+
+                        <div className="flex flex-row justify-evenly mb-4">
+                            I am <a href={user.html_url}> <Badge> {capitalize(user.login)}</Badge> </a>from{' '}
+                            <Badge>{capitalize(user?.location)}</Badge>
+                        </div>
+                        <div className="text-lg font-semibold mb-2">
+                            What do I do you ask?
+                        </div>
+                        <div className="mb-2">I am {user?.bio}</div>
+                        <div className="flex flex-row justify-evenly mb-5">
+                            <div className="flex flex-row justify-center mr-2">
+                                <div className="whitespace-nowrap mr-2">
+                                    created at:
+                                </div>
+                                <Badge>{formateDate(user?.created_at)}</Badge>
+                            </div>
+                            <div className="flex flex-row justify-center">
+                                <div className="whitespace-nowrap mr-2">
+                                    Update at:
+                                </div>
+                                <Badge>{formateDate(user?.updated_at)}</Badge>
+                            </div>
+                        </div>
+                        <div className="flex flex-row justify-start mb-5">
+                            <div className="whitespace-nowrap mr-2 underline">
+                                Public Repos:
+                            </div>
+                            <Badge className="hover:underline cursor-pointer">
+                                {user?.public_repos}
+                            </Badge>
+                        </div>
+                        <div className="flex flex-row justify-start mb-5">
+                            <div className="whitespace-nowrap mr-2 underline">
+                                Followers:
+                            </div>
+                            <Badge className="hover:underline cursor-pointer">
+                                {user?.followers}
+                            </Badge>
                         </div>
                     </div>
                 </div>
