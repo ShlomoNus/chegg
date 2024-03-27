@@ -1,10 +1,7 @@
 import { GithubUserApiInstance } from '@/services/api/github';
 import { Details, Segment, User, DetailsWithName } from '@/types/api';
 import { formateDate } from '@/utils/date';
-import {
-    useInfiniteQuery,
-    useQuery,
-} from '@tanstack/react-query';
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 
 async function getUser(user: string) {
     let { data } = await GithubUserApiInstance.get<User>(user);
@@ -26,7 +23,7 @@ export function useGetGithubUserQuery(user: string) {
     });
 }
 
-async function getUsersDetails(user: string, segment: Segment,page:number) {
+async function getUsersDetails(user: string, segment: Segment, page: number) {
     let { data } = await GithubUserApiInstance.get<Details[]>(
         `${user}/${segment}?page=${page}&per_page=${10}`
     );
@@ -37,21 +34,20 @@ async function getUsersDetails(user: string, segment: Segment,page:number) {
         }
     }
 
-
     return { details: data as DetailsWithName[], page };
 }
-export function useGetUserDetailsQuery(user: string, segment: Segment,max:number) {
-    return useInfiniteQuery(
-        
-        {queryKey: ['infinit'],
-        initialPageParam:1,
-        maxPages:max,
-        queryFn:  ({pageParam}) => getUsersDetails(user, segment,pageParam),
-        getNextPageParam:(_,pages)=>{
-            return pages.length+1
-        }
-
-    }
-    
-    );
+export function useGetUserDetailsQuery(
+    user: string,
+    segment: Segment,
+    max: number
+) {
+    return useInfiniteQuery({
+        queryKey: ['infinit'],
+        initialPageParam: 1,
+        maxPages: max,
+        queryFn: ({ pageParam }) => getUsersDetails(user, segment, pageParam),
+        getNextPageParam: (_, pages) => {
+            return pages.length + 1;
+        },
+    });
 }
